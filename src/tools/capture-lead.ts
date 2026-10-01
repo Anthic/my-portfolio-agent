@@ -38,7 +38,8 @@ export async function executeCaptureLead(args: unknown): Promise<string> {
   }
 
 
-  NotificationDispatcher.dispatchLeadNotification(lead);
+  // Await notification delivery so serverless function does not freeze before HTTP dispatch
+  await NotificationDispatcher.dispatchLeadNotification(lead);
 
 
   return `Thank you, ${lead.name}! I have securely recorded your details and sent an instant priority notification directly to Anthic's phone and email. He will reach out to you as soon as possible.`;

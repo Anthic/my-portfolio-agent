@@ -3,19 +3,18 @@ import { sendEmailLeadAlert } from './email.js';
 import { sendSmsLeadAlert } from './sms.js';
 
 export class NotificationDispatcher {
-  static dispatchLeadNotification(lead: LeadNotificationPayload): void {
-
-    Promise.allSettled([
+  static async dispatchLeadNotification(lead: LeadNotificationPayload): Promise<void> {
+    const results = await Promise.allSettled([
       sendTelegramLeadAlert(lead),
       sendEmailLeadAlert(lead),
       sendSmsLeadAlert(lead),
-    ]).then((results) => {
-      results.forEach((res, idx) => {
-        const channel = idx === 0 ? 'Telegram' : idx === 1 ? 'Email' : 'SMS';
-        if (res.status === 'rejected') {
-          console.error(`[WARN] Channel ${channel} failed:`, res.reason);
-        }
-      });
+    ]);
+
+    results.forEach((res, idx) => {
+      const channel = idx === 0 ? 'Telegram' : idx === 1 ? 'Email' : 'SMS';
+      if (res.status === 'rejected') {
+        console.error(`[WARN] Channel ${channel} failed:`, res.reason);
+      }
     });
   }
 }
