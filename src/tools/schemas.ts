@@ -1,26 +1,23 @@
 import { z } from 'zod';
 
-
 export const CaptureLeadSchema = z.object({
   name: z.string().describe("The visitor or recruiter's full name"),
-  email: z.string().email("Valid email required").optional().describe("Their professional email"),
-  phone: z.string().optional().describe("Their phone or WhatsApp number"),
-  company: z.string().optional().describe("Company or organization name they represent"),
-  roleOffered: z.string().optional().describe("Job title, role, or project context offered to Anthic"),
+  email: z.string().nullable().optional().describe("Their contact email"),
+  phone: z.string().nullable().optional().describe("Their phone or WhatsApp number"),
+  company: z.string().nullable().optional().describe("Company or organization name they represent"),
+  roleOffered: z.string().nullable().optional().describe("Job title, role, or project context offered to Anthic"),
   message: z.string().describe("Summary of what they want or what was discussed in chat"),
-  ref: z.string().optional().describe("Source referral if present"),
+  ref: z.string().nullable().optional().describe("Source referral if present"),
 });
 
 export type CaptureLeadInput = z.infer<typeof CaptureLeadSchema>;
 
-
 export const BookMeetingSchema = z.object({
   meetingType: z.enum(['quick_intro_15m', 'technical_interview_30m', 'general']).default('quick_intro_15m'),
-  visitorName: z.string().optional(),
+  visitorName: z.string().nullable().optional(),
 });
 
 export type BookMeetingInput = z.infer<typeof BookMeetingSchema>;
-
 
 export const AGENT_TOOLS = [
   {
@@ -32,12 +29,12 @@ export const AGENT_TOOLS = [
         type: 'object',
         properties: {
           name: { type: 'string', description: "The visitor's name" },
-          email: { type: 'string', description: 'Their contact email' },
-          phone: { type: 'string', description: 'Their phone or WhatsApp number' },
-          company: { type: 'string', description: 'Company or organization' },
-          roleOffered: { type: 'string', description: 'The role or project opportunity' },
+          email: { type: ['string', 'null'], description: 'Their contact email if provided' },
+          phone: { type: ['string', 'null'], description: 'Their phone or WhatsApp number if provided' },
+          company: { type: ['string', 'null'], description: 'Company or organization if known' },
+          roleOffered: { type: ['string', 'null'], description: 'The role or project opportunity if known' },
           message: { type: 'string', description: 'Summary of the discussion/inquiry' },
-          ref: { type: 'string', description: 'Source reference' },
+          ref: { type: ['string', 'null'], description: 'Source reference' },
         },
         required: ['name', 'message'],
       },
@@ -56,7 +53,7 @@ export const AGENT_TOOLS = [
             enum: ['quick_intro_15m', 'technical_interview_30m', 'general'],
             description: 'Type of meeting desired',
           },
-          visitorName: { type: 'string', description: "The visitor's name" },
+          visitorName: { type: ['string', 'null'], description: "The visitor's name" },
         },
       },
     },

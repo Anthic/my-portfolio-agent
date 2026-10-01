@@ -3,7 +3,7 @@ import { LLMRouter } from '../src/llm/router.js';
 async function testLeadCapture() {
   console.log('🧪 Testing Lead Capture Tool Calling...\n');
 
-  const recruiterMessage = "Hi Anthic, I am Alex from Google (alex@google.com, +14155552671). We are looking for a Senior AI Engineer and would love to interview you.";
+  const recruiterMessage = "notify anthic that i am jamil my email is anthickumarsingh@gamil.com and 01717182035 is my phone number 20/10/2026 his interview notify him";
 
   console.log(`User: ${recruiterMessage}\n\nAgent Response:\n`);
 

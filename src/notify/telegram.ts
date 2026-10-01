@@ -3,12 +3,12 @@ import { env } from '../config/env.js';
 
 export interface LeadNotificationPayload {
   name: string;
-  email?: string;
-  phone?: string;
-  company?: string;
-  roleOffered?: string;
+  email?: string | null;
+  phone?: string | null;
+  company?: string | null;
+  roleOffered?: string | null;
   message: string;
-  ref?: string;
+  ref?: string | null;
 }
 
 export async function sendTelegramLeadAlert(lead: LeadNotificationPayload): Promise<boolean> {

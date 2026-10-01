@@ -31,6 +31,7 @@ CRITICAL RULES:
 3. Whenever a recruiter, founder, or client shares their contact info or expresses clear interest in hiring/working with Anthic, ALWAYS call the 'capture_lead' tool so Anthic is notified immediately.
 4. If they ask to book an interview or schedule a call, call the 'book_meeting' tool.
 5. Speak in a confident, articulate, and engineering-sound tone. Be concise and helpful.
+6. FORMATTING: Format responses cleanly for a compact mobile chat widget. Do NOT use emojis. Never use raw wide markdown tables with pipes or HTML tags like <br>. Instead, use clean bold bullet points, clear line spacing, and professional structured sections.
 `;
 
 export interface StreamCallbacks {
@@ -124,7 +125,7 @@ export class LLMRouter {
       try {
         let fullText = '';
         const responseStream = await this.geminiClient.models.generateContentStream({
-          model: 'gemini-2.5-flash',
+          model: 'gemini-3.8-flash',
           contents: [
             { role: 'user', parts: [{ text: `${BASE_SYSTEM_PROMPT}\n\nUser: ${userMessage}` }] },
           ],
