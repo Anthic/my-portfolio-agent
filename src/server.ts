@@ -163,12 +163,16 @@ app.post(
   }
 );
 
-// Start Express Server
+// Start Express Server locally (when not running in Vercel Serverless environment)
 const PORT = env.PORT || 4000;
-app.listen(PORT, () => {
-  console.log(`\n🚀 Portfolio AI Agent Server running at http://localhost:${PORT}`);
-  console.log(`📡 Endpoints:`);
-  console.log(`   - GET  /health`);
-  console.log(`   - POST /api/track (Referral Analytics)`);
-  console.log(`   - POST /api/chat (SSE Stream with Guardrails & Tools)\n`);
-});
+if (!process.env.VERCEL) {
+  app.listen(PORT, () => {
+    console.log(`\n🚀 Portfolio AI Agent Server running at http://localhost:${PORT}`);
+    console.log(`📡 Endpoints:`);
+    console.log(`   - GET  /health`);
+    console.log(`   - POST /api/track (Referral Analytics)`);
+    console.log(`   - POST /api/chat (SSE Stream with Guardrails & Tools)\n`);
+  });
+}
+
+export default app;

@@ -13,7 +13,13 @@ const __dirname = path.dirname(__filename);
 let profileContent = '';
 try {
   const profilePath = path.resolve(__dirname, '../data/profile.md');
-  profileContent = fs.readFileSync(profilePath, 'utf-8');
+  const cwdProfilePath = path.resolve(process.cwd(), 'src/data/profile.md');
+
+  if (fs.existsSync(profilePath)) {
+    profileContent = fs.readFileSync(profilePath, 'utf-8');
+  } else if (fs.existsSync(cwdProfilePath)) {
+    profileContent = fs.readFileSync(cwdProfilePath, 'utf-8');
+  }
 } catch (e) {
   console.warn('[WARN] Could not load profile.md, using default context');
 }
